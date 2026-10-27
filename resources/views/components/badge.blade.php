@@ -34,3 +34,4 @@
     <span class="w-1.5 h-1.5 mr-1.5 rounded-full {{ $dotClasses }}"></span>
     {{ $slot->isEmpty() ? $status : $slot }}
 </span>
+

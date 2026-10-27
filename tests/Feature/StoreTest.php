@@ -99,3 +99,4 @@ class StoreTest extends TestCase
         $this->assertDatabaseMissing('stores', ['id' => $store->id]);
     }
 }
+

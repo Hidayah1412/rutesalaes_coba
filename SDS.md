@@ -1,6 +1,6 @@
 A. Lingkungan & Arsitektur Teknologi
 Dokumen ini mewajibkan penggunaan teknologi berikut agar sesuai dengan standar proyek:
-- Framework Utama: Laravel 11 dengan konfigurasi lingkungan via .env.
+- Framework Utama: Laravel Terbaru. Lingkungan pengembangan lokal (Local Environment) menggunakan Laravel Herd. Dihubungkan melalui TablePlus (SQLite). Konfigurasi port dan koneksi diatur melalui .env.
 - Pola Arsitektur: Wajib menggunakan pola MVC (Model-View-Controller) dengan definisi Routes yang jelas.
 - Antarmuka (Frontend): Menggunakan template engine Blade, didukung oleh framework CSS Tailwind atau Bootstrap untuk memastikan tampilan konsisten dan responsif di perangkat mobile sales. Komponen UI harus dibuat reusable.
 B. Desain Basis Data (Minimal 3 Entitas/Tabel Relasional)

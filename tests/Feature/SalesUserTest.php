@@ -83,3 +83,4 @@ class SalesUserTest extends TestCase
         $this->assertDatabaseMissing('users', ['id' => $user->id]);
     }
 }
+

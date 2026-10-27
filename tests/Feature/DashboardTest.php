@@ -99,3 +99,4 @@ class DashboardTest extends TestCase
         $response->assertSee('Aktivitas Kunjungan Terbaru');
     }
 }
+

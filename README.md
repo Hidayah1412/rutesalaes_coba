@@ -1,11 +1,11 @@
 # RuteSales - Sistem Pemantauan Kunjungan Sales Lapangan
 
-**RuteSales** adalah aplikasi berbasis web yang dirancang untuk memantau, mengelola, dan mengevaluasi aktivitas kunjungan tim sales lapangan ke toko dan warung mitra. Aplikasi ini dibangun dengan standar arsitektur **MVC (Model-View-Controller)** menggunakan **Laravel 11**, template engine **Blade**, framework CSS **Tailwind CSS**, serta basis data relasional (**SQLite / MySQL**).
+**RuteSales** adalah aplikasi berbasis web yang dirancang untuk memantau, mengelola, dan mengevaluasi aktivitas kunjungan tim sales lapangan ke toko dan warung mitra. Aplikasi ini dibangun dengan standar arsitektur **MVC (Model-View-Controller)** menggunakan **Laravel Versi Terbaru (Laravel 11.x)**, lingkungan pengembangan lokal **Laravel Herd**, basis data **SQLite** yang dihubungkan melalui **TablePlus**, template engine **Blade**, serta framework CSS **Tailwind CSS**.
 
 ---
 
 ## Daftar Isi
-1. [Panduan Instalasi Aplikasi](#1-panduan-instalasi-aplikasi)
+1. [Panduan Instalasi Aplikasi & Lingkungan Lokal](#1-panduan-instalasi-aplikasi--lingkungan-lokal)
 2. [Daftar Fitur Utama](#2-daftar-fitur-utama)
 3. [Penjelasan Struktur Database](#3-penjelasan-struktur-database)
 4. [Laporan Hasil Skenario Pengujian](#4-laporan-hasil-skenario-pengujian)
@@ -13,18 +13,35 @@
 
 ---
 
-## 1. Panduan Instalasi Aplikasi
+## 1. Panduan Instalasi Aplikasi & Lingkungan Lokal
 
-Ikuti langkah-langkah berikut untuk menginstal dan menjalankan aplikasi **RuteSales** di lingkungan lokal:
+Ikuti langkah-langkah berikut untuk menginstal dan menjalankan aplikasi **RuteSales** di lingkungan pengembangan lokal:
 
-### A. Persyaratan Sistem
-- **PHP** versi 8.2 atau lebih tinggi (ekstensi `pdo`, `pdo_sqlite` atau `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`).
-- **Composer** versi 2.x.
-- Web browser modern (Google Chrome, Firefox, Safari, Edge).
+### A. Persyaratan Sistem & Tooling
+- **Framework Utama**: Laravel Versi Terbaru (Laravel 11.x).
+- **Lingkungan Lokal**: **Laravel Herd** (untuk macOS / Windows).
+- **Basis Data**: **SQLite** dihubungkan melalui **TablePlus**.
+- **Composer**: Versi 2.x.
+- **PHP**: Versi 8.2 atau lebih baru (termasuk modul `pdo_sqlite`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`).
 
-### B. Langkah Instalasi Langkah-Demi-Langkah
+### B. Konfigurasi Lingkungan Lokal via Laravel Herd
+Aplikasi ini dioptimalkan untuk berjalan pada **Laravel Herd**:
+1. Pastikan **Laravel Herd** sudah terpasang dan berjalan di komputer Anda.
+2. Tempatkan atau hubungkan direktori proyek ke dalam Herd:
+   - Jika proyek berada di folder `d:\Pemrograman\Aplikasi\RuteSales`, buka terminal dan jalankan:
+     ```bash
+     cd d:\Pemrograman\Aplikasi\RuteSales
+     herd link rutesales
+     ```
+   - Atau tambahkan path direktori `D:\Pemrograman\Aplikasi` ke dalam daftar *Parked Paths* pada menu pengaturan Laravel Herd.
+3. Setelah terhubung, aplikasi dapat langsung diakses secara otomatis melalui domain lokal:
+   👉 **[http://rutesales.test](http://rutesales.test)**
 
-1. **Buka Terminal / Command Prompt** pada direktori proyek:
+*(Alternatif tanpa Herd: Anda tetap dapat menjalankan server lokal bawaan menggunakan perintah `php artisan serve`, dan mengaksesnya di `http://127.0.0.1:8000`).*
+
+### C. Langkah Instalasi Langkah-Demi-Langkah
+
+1. **Buka Terminal / PowerShell** pada direktori proyek:
    ```bash
    cd d:\Pemrograman\Aplikasi\RuteSales
    ```
@@ -35,12 +52,23 @@ Ikuti langkah-langkah berikut untuk menginstal dan menjalankan aplikasi **RuteSa
    ```
 
 3. **Konfigurasi Berkas Lingkungan (`.env`)**:
-   Salin berkas konfigurasi `.env.example` menjadi `.env` jika belum ada:
+   Salin berkas konfigurasi `.env.example` menjadi `.env`:
    ```bash
    # Di Windows PowerShell:
    Copy-Item .env.example .env
    ```
-   *Secara bawaan, aplikasi telah terkonfigurasi menggunakan koneksi basis data SQLite yang mandiri dan portabel (`DB_CONNECTION=sqlite`).*
+   Atur port dan URL pada `.env`:
+   ```env
+   APP_NAME=RuteSales
+   APP_ENV=local
+   APP_KEY=base64:SDAtrsFVayVhGJ8y5WFTqDi6HXq6z4G0nMm2iARFxBI=
+   APP_DEBUG=true
+   APP_TIMEZONE=Asia/Jakarta
+   APP_URL=http://rutesales.test
+
+   # Basis data menggunakan SQLite:
+   DB_CONNECTION=sqlite
+   ```
 
 4. **Generate Application Key**:
    ```bash
@@ -53,11 +81,17 @@ Ikuti langkah-langkah berikut untuk menginstal dan menjalankan aplikasi **RuteSa
    php artisan migrate:fresh --seed
    ```
 
-6. **Jalankan Server Lokal**:
-   ```bash
-   php artisan serve
-   ```
-   Aplikasi dapat diakses melalui browser pada alamat: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**.
+6. **Panduan Menghubungkan Basis Data ke TablePlus (SQLite)**:
+   Aplikasi menggunakan SQLite yang terintegrasi langsung dengan TablePlus:
+   1. Buka aplikasi **TablePlus**.
+   2. Klik tombol **Create a new connection...** (atau ikon **+**).
+   3. Pilih jenis database: **SQLite**.
+   4. Berikan nama koneksi, misalnya: `RuteSales SQLite`.
+   5. Pada kolom **Database Path**, klik tombol **Choose...** atau *browse* dan pilih berkas:
+      `D:\Pemrograman\Aplikasi\RuteSales\database\database.sqlite`
+   6. Klik tombol **Test** untuk memastikan koneksi sukses (indikator hijau).
+   7. Klik tombol **Connect** untuk membuka seluruh tabel (`users`, `stores`, `visits`, dll.).
+   *(Tips: Anda juga bisa langsung menyeret / drag-and-drop berkas `database.sqlite` dari File Explorer langsung ke jendela TablePlus).*
 
 7. **Menjalankan Pengujian Otomatis (Feature & Unit Tests)**:
    ```bash

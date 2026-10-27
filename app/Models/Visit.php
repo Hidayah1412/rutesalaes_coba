@@ -93,3 +93,4 @@ class Visit extends Model
         return $query->where('status', 'Selesai');
     }
 }
+
